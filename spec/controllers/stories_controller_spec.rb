@@ -67,6 +67,21 @@ describe "StoriesController" do
     end
   end
 
+  describe "/mark_as_unread" do
+    before do
+      story_one.is_ready = true
+      StoryRepository.stub(:fetch).and_return(story_one)
+    end
+
+    it "marks a story as unread" do
+      StoryRepository.should_receive(:save).once
+
+      post "/mark_as_unread", {story_id: story_one.id}.to_json
+
+      story_one.is_read.should be_false
+    end
+  end
+
   describe "/mark_all_as_read" do
     it "marks all unread stories as read and reload the page" do
       MarkAllAsRead.any_instance.should_receive(:mark_as_read).once

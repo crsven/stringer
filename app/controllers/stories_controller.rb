@@ -19,4 +19,10 @@ class Stringer < Sinatra::Base
     
     redirect to("/news")
   end
+
+  post "/mark_as_unread" do
+    story = StoryRepository.fetch(params[:story_id])
+    story.is_read = false
+    StoryRepository.save(story)
+  end
 end
