@@ -11,6 +11,12 @@
   </div>
 
   <div class="pull-right">
+    <a class="btn btn-primary" id="starred" href="/starred" title="<%= t('partials.action_bar.starred_stories') %>">
+      <i class="icon-star"></i>
+    </a>
+    <a class="btn btn-primary" id="archive" href="/archive" title="<%= t('partials.action_bar.archived_stories') %>">
+      <i class="icon-time"></i>
+    </a>
     <a class="btn btn-primary" id="feeds" href="/feeds" title="<%= t('partials.action_bar.view_feeds') %>">
       <i class="icon-list"></i>
     </a>
@@ -19,3 +25,22 @@
     </a>
   </div>
 </div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#mark-all").click(function(e) {
+      e.preventDefault();
+
+      $("form#mark-all-as-read").submit();
+    });
+    
+    Mousetrap.bind("r", function() {
+      var refresh = $("a#refresh")[0];
+      if (refresh) refresh.click();
+    });
+
+    Mousetrap.bind("shift+a", function() {
+      $("form#mark-all-as-read").submit();
+    });
+  });
+</script>

@@ -1,0 +1,133 @@
+es:
+  archive:
+    next: Siguiente
+    of: de
+    previous: Anterior
+    sorry: ! 'Disculpa, no has leido ninguna historia aún! '
+  date:
+    abbr_month_names:
+    - 
+    - Ene
+    - Feb
+    - Mar
+    - Abr
+    - May
+    - Jun
+    - Jul
+    - Ago
+    - Sep
+    - Oct
+    - Nov
+    - Dic
+  feeds:
+    add:
+      description: Pega la URL del blog que quieras leer
+      fields:
+        feed_url: Feed URL
+        submit: Añadir
+      flash:
+        added_successfully: Hemos agregado tu nuevo feed. Vuelve a revisar en algunos momentos.
+        already_subscribed_error: Actualmente ya estas suscrito a este feed...
+        feed_not_found_error: No podemos encontrar ese feed. Intentalo de nuevo.
+      title: ¿Necesitas nuevas historias?
+    index:
+      add: añadir
+      add_some_feeds: Hey, deberias %{add} algunos feeds.
+  first_run:
+    password:
+      anti_social: anti-social
+      description: Incorporemos una contraseña para que solo tu puedas leer tus historias
+      fields:
+        next: Siguiente
+        password: Contraseña
+        password_confirmation: Confirmar
+      flash:
+        passwords_dont_match: Hey, la confirmación del password no coincide. Intentalo de nuevo.
+      subtitle: ! 'Hay solo un usuario: tu.'
+      title: Stringer es
+  flash:
+    cookies_required: Bueno, esto es embarazoso. Las cookies son un requerimiento de funcionamiento de la aplicación.
+    js_required: Bueno, esto es embarazoso. Javascript es un requerimiento para el funcionamiento de la aplicación.
+  import:
+    description: ! '%{link} tus feeds de google reader e importarlos'
+    export: Exportar
+    fields:
+      import: Importar
+      not_now: No ahora
+    subtitle: Vamos a configurar tus feeds
+    title: Bienvenido a bordo.
+  layout:
+    back_to_work: ¡Vuelve al trabajo, holgazán!
+    export: Exportar
+    hey: Hey!
+    logout: Salir
+    support: Soporte
+    title: stringer | Tu Amigo RSS
+  partials:
+    action_bar:
+      add_feed: Añadir feed
+      archived_stories: Historias archivadas
+      mark_all: Marcar todas como leidas
+      refresh: Refrescar
+      view_feeds: Ver feeds
+    feed:
+      last_fetched:
+        never: Nunca
+      last_updated: Última actualización
+      status_bubble:
+        green: ¡Éxito!
+        red: Error de análisis (y nunca funcionó antes, tampoco)
+        yellow: Error de análisis (probablemente temporal)
+    feed_action_bar:
+      add_feed: Añadir un feed
+      archived_stories: Historias archivadas
+      feeds: Ver feeds
+      home: Volver a historias
+    shortcuts:
+      keys:
+        jk: Siguiente/Anterior historia
+        m: Marcar el item como leido/no leido
+        np: Mueva por abajo/mueva por arriba
+        oenter: Arrastrar historia abierta/cerrada
+        or: o
+        r: Refrescar
+        shifta: Marcar todas como leidas
+        v: Ir a URL de la historia
+      title: Atajos de teclado
+    zen:
+      archive: Ver todos los items
+      go_make: ve a hacer algo
+      gtfo: Ahora deja de leer blogs y
+      rss_zero: Tu has alcanzado RSS Zero&trade;
+  sessions:
+    destroy:
+      flash:
+        logged_out_successfully: Te has desconectado!
+    new:
+      fields:
+        password: Contraseña
+        submit: Acceder
+      flash:
+        wrong_password: El password es incorrecto. Inténtalo de nuevo.
+      rss: RSS
+      subtitle: Bienvenido de nuevo, amigo.
+      title: Stringer que habla
+  stories:
+    keep_unread: Mantener como no leido
+  time:
+    formats:
+      default: ! '%d de %b %H:%M'
+  tutorial:
+    add_feed: añadir feed
+    as_read: como leidos
+    click_to_read: (click para leer)
+    description: Estamos recibiendo algunas historias para leer, darnos un segundo.
+    mark_all: marcar todos
+    ready: Okay, ¡esta listo!
+    refresh: refrescar
+    simple: simple
+    start: Comenzar a leer
+    subtitle: Acá está el manual de instrucciones.
+    title: ! 'Stringer es '
+    your_feeds: tus feeds
+    your_stories: tus historias

@@ -1,4 +1,5 @@
 require "spec_helper"
+require 'will_paginate/array'
 
 app_require "controllers/stories_controller"
 
@@ -7,7 +8,7 @@ describe "StoriesController" do
   let(:story_two) { StoryFactory.build }
   let(:stories) { [story_one, story_two] }
 
-  describe "/news" do
+  describe "GET /news" do
     before do
       StoryRepository.stub(:unread).and_return(stories)
       UserRepository.stub(fetch: stub)
@@ -16,7 +17,7 @@ describe "StoriesController" do
     it "display list of unread stories" do
       get "/news"
 
-      last_response.body.should have_tag("li.story", count: 2)
+      last_response.body.should have_tag("#stories")
     end
 
     it "displays the blog title and article title" do
@@ -40,10 +41,10 @@ describe "StoriesController" do
     it "should have correct footer links" do
       get "/news"
 
-      content = last_response.body
-      content.should have_tag("a", with: { href: "/feeds/export"})
-      content.should have_tag("a", with: { href: "/logout"})
-      content.should have_tag("a", with: { href: "https://github.com/swanson/stringer"})
+      page = last_response.body
+      page.should have_tag("a", with: { href: "/feeds/export"})
+      page.should have_tag("a", with: { href: "/logout"})
+      page.should have_tag("a", with: { href: "https://github.com/swanson/stringer"})
     end
 
     it "displays a zen-like message when there are no unread stories" do
@@ -55,15 +56,94 @@ describe "StoriesController" do
     end
   end
 
-  describe "/mark_as_read" do
+  describe "GET /archive" do
+    let(:read_one) { StoryFactory.build(is_read: true) }
+    let(:read_two) { StoryFactory.build(is_read: true) }
+    let(:stories) { [read_one, read_two].paginate }
+    before { StoryRepository.stub(:read).and_return(stories) }
+
+    it "displays the list of read stories with pagination" do
+      get "/archive"
+
+      page = last_response.body
+      page.should have_tag("#stories")
+      page.should have_tag("div#pagination")
+    end
+  end
+
+  describe "GET /starred" do
+    let(:starred_one) { StoryFactory.build(is_starred: true) }
+    let(:starred_two) { StoryFactory.build(is_starred: true) }
+    let(:stories) { [starred_one, starred_two].paginate }
+    before { StoryRepository.stub(:starred).and_return(stories) }
+
+    it "displays the list of starred stories with pagination" do
+      get "/starred"
+
+      page = last_response.body
+      page.should have_tag("#stories")
+      page.should have_tag("div#pagination")
+    end
+  end
+
+  describe "PUT /stories/:id" do
     before { StoryRepository.stub(:fetch).and_return(story_one) }
+    context "is_read parameter" do
+      context "when it is not malformed" do
+        it "marks a story as read" do
+          StoryRepository.should_receive(:save).once
 
-    it "marks a story as read" do
-      StoryRepository.should_receive(:save).once
+          put "/stories/#{story_one.id}", {is_read: true}.to_json
 
-      post "/mark_as_read", {story_id: story_one.id}.to_json
+          story_one.is_read.should eq true
+        end
+      end
 
-      story_one.is_read.should be_true
+      context "when it is malformed" do
+        it "marks a story as read" do
+          StoryRepository.should_receive(:save).once
+
+          put "/stories/#{story_one.id}", {is_read: "malformed"}.to_json
+
+          story_one.is_read.should eq true
+        end
+      end
+    end
+
+    context "keep_unread parameter" do
+      context "when it is not malformed" do
+        it "marks a story as permanently unread" do
+          put "/stories/#{story_one.id}", {keep_unread: false}.to_json
+
+          story_one.keep_unread.should eq false
+        end
+      end
+
+      context "when it is malformed" do
+        it "marks a story as permanently unread" do
+          put "/stories/#{story_one.id}", {keep_unread: "malformed"}.to_json
+
+          story_one.keep_unread.should eq true
+        end
+      end
+    end
+
+    context "is_starred parameter" do
+      context "when it is not malformed" do
+        it "marks a story as permanently starred" do
+          put "/stories/#{story_one.id}", {is_starred: true}.to_json
+
+          story_one.is_starred.should eq true
+        end
+      end
+
+      context "when it is malformed" do
+        it "marks a story as permanently starred" do
+          put "/stories/#{story_one.id}", {is_starred: "malformed"}.to_json
+
+          story_one.is_starred.should eq true
+        end
+      end
     end
   end
 

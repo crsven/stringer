@@ -1,5 +1,5 @@
-class SampleStory < Struct.new(:source, :title, :lead, :published)
-  def id; -1; end
+class SampleStory < Struct.new(:source, :title, :lead, :is_read, :published)
+  def id; -1 * rand(100); end
   def headline; title; end
   def permalink; "#"; end
   def lead; "Tofu shoreditch intelligentsia umami, fashion axe photo booth try-hard"; end
@@ -23,5 +23,24 @@ class SampleStory < Struct.new(:source, :title, :lead, :published)
     booth vice literally.</p>
 eos
   end
+  def is_read; false; end
+  def keep_unread; false; end
+  def is_starred; false; end
   def published; Time.now; end
+
+  def as_json(options = {})
+    {
+      id: id,
+      headline: headline,
+      lead: lead,
+      source: source,
+      title: title,
+      pretty_date: published.strftime("%A, %B %d"),
+      body: body,
+      permalink: permalink,
+      is_read: is_read,
+      is_starred: is_starred,
+      keep_unread: keep_unread
+    }
+  end
 end
